@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',#Needed to see status of periodic tasks.
+    'django_celery_beat',#
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,12 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#Celery configuration attributes
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CELERY_BROKER_URL="redis://127.0.0.1:6379"#Redis config in order to send 
+CELERY_ACCEPT_CONTENT=["application/json"]
+CELERY_RESULT_SERIALIZER='json'
+CELERY_TASK_SERIALIZER='json'
+CELERY_TIMEZONE="Asia/Kathmandu"
+CELERY_RESULT_BACKEND='django-db'#Result of celery stored in django-db
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
