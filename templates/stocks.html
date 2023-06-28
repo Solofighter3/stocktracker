@@ -57,5 +57,27 @@
   </tbody>
 </table>
 </div>
+{{ room_name|json_script:"room-name" }}
+<script>
+  const roomName= JSON.parse(document.getElementById("room-name").textContent)
+  let queryString=window.location.search;//To get the location of site which contains stocks
+  queryString=queryString.substring(1);
+  let url=`ws://${window.location.host}/ws/stocks/${roomName}/?${queryString}`
+  const chatsocket=new WebSocket(url);
+  //As soon as someone enters into our stocks page WebSocket communication
+  //will be started between user and server.
+  chatsocket.onmessage=function(e){
+    console.log(e.data)
+    const data=JSON.parse(e.data)
+    console.log(data)
+  };
+  //When our chatsocket recives the data which was send by our task via backend we will
+  //Console out that data
+
+</script>
+
+{% endblock %}
+ 
+{% block js %}
 {% endblock %}
 

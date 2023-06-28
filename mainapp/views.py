@@ -40,7 +40,7 @@ async def stockspicked(request):
             datas.update({i:data['Global Quote']})
     except:
          pass
-    return render(request,"stocks.html",{'data':datas})
+    return render(request,"stocks.html",{'data':datas,"room_name":"tracks"})
 
 
 

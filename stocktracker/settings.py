@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',#Needed to see status of periodic tasks.
-    'django_celery_beat',#
+    'django_celery_beat',#Needed to perform periodic tasks
+    'channels',#Needed to send real time data to frontend
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'stocktracker.wsgi.application'
+ASGI_APPLICATION = 'stocktracker.asgi.application'
+
 
 
 # Database
@@ -138,3 +141,13 @@ CELERY_TASK_SERIALIZER='json'
 CELERY_TIMEZONE="Asia/Kathmandu"
 CELERY_RESULT_BACKEND='django-db'#Result of celery stored in django-db
 CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
+#Channel layers are important because each user entered in our websocket connection
+#will have its own channel layer which is stored in inMemoryChannelLayer
+CHANNEL_LAYERS={
+        'default':{
+            'BACKEND':'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                "hosts":[('127.0.0.1',6379)],
+                },
+            },
+        }
