@@ -8,5 +8,6 @@ Workflow:
 At first I created a group named chat_tracks inside consumers.py vwhich contains channel_layers of all user/clients in our websocket.
 Whenever user comes websocket page with some selected stocks from previous page,I will add that user's channel_layer inside my chat_tracks group
 and I will create a task(If not present) using those selected stocks selected by user as an argument to task or I will just change the argument if task
-is present.In that task named mytask I will call api which will get all details about those selected stocks and I will send those details to group
-chat_tracks using group send.chat_tracks contains all the uses/clients channel_layer so we can 
+is present.In that task named mytask I will call api which will get all details about those selected stocks and I will send those details to user who
+made the request using group_send method.When I use group_send method at first I will send those details to chat_tracks group which contains all the uses/clients 
+channel_layer from that group I can send those data to user which made the request. 
