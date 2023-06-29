@@ -14,4 +14,6 @@ is present.In that task named mytask I will call api which will get all details 
 made the request using group_send method.When I use group_send method at first I will send those details to chat_tracks group which contains all the uses/clients 
 channel_layer from that group I can send those data to user which made the request.I created group because whenever two or more users/clients inside that group 
 asks for details about same stocks then I can make only one api call for those users and  boardcast those details to users through group.Once I send that details to specified
-channel_layer in my backend I will use websocket to send that details to frontend to that specified user/client/channel_layer. 
+channel_layer in my backend I will use websocket to send that details to frontend to that specified user/client/channel_layer.In consumer.py I have made specifications to 
+delete the task if there is no argument,delete the stocks which are not selected by specific user,delete the user if it is disconnected from the websocket.In this way I can
+prevent data clash between two users.
