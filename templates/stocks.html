@@ -45,12 +45,12 @@
     <tr>
       <th scope="row">{{forloop.counter}}</th>
       <td>{{key}}</td>
-      <td>{{ value|get:"05. price" }}</td>
-      <td>{{ value|get:"03. high" }}</td>
-      <td>{{ value|get:"04. low"  }}</td>
-      <td>{{ value|get:"08. previous close"|floatformat:4 }}</td>
-      <td>{{ value|get:"02. open" }}</td>
-      <td>{{ value|get:"06. volume" }}</td>
+      <td id="{{key}}_price">{{ value|get:"05. price" }}</td>
+      <td id="{{key}}_high">{{ value|get:"03. high" }}</td>
+      <td id="{{key}}_low">{{ value|get:"04. low"  }}</td>
+      <td id="{{key}}_previous_close">{{ value|get:"08. previous close"|floatformat:4 }}</td>
+      <td id="{{key}}_open">{{ value|get:"02. open" }}</td>
+      <td id="{{key}}_volume">{{ value|get:"06. volume" }}</td>
     </tr>
 {% endfor %}
 {% endif %}
@@ -59,21 +59,32 @@
 </div>
 {{ room_name|json_script:"room-name" }}
 <script>
+  //As soon as someone enters into our stocks page WebSocket communication
+  //will be started between user and server.
   const roomName= JSON.parse(document.getElementById("room-name").textContent)
   let queryString=window.location.search;//To get the location of site which contains stocks
   queryString=queryString.substring(1);
   let url=`ws://${window.location.host}/ws/stocks/${roomName}/?${queryString}`
+  //When our chatsocket recives the data which was send by our task via backend we will
+  //Console out that data
   const chatsocket=new WebSocket(url);
-  //As soon as someone enters into our stocks page WebSocket communication
-  //will be started between user and server.
-  chatsocket.onmessage=function(e){
+    chatsocket.onmessage=function(e){
     console.log(e.data)
     const data=JSON.parse(e.data)
     console.log(data)
-  };
-  //When our chatsocket recives the data which was send by our task via backend we will
-  //Console out that data
 
+    //Now we need to update our table according to our data which has been sent from backend
+    for(const[key,value] of Object.entries(data)){
+      console.log(key)
+      document.getElementById(key+"_price").innerHTML=value["05. price"]
+      document.getElementById(key+"_high").innerHTML=value["03. high"]
+      document.getElementById(key+"_low").innerHTML=value["04. low"]
+      document.getElementById(key+"_previous_close").innerHTML=value["08. previous close"]
+      document.getElementById(key+"_open").innerHTML=value["02. open"]
+      document.getElementById(key+"_volume").innerHTML=value["06. volume"]
+      }
+  };
+   
 </script>
 
 {% endblock %}
