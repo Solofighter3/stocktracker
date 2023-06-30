@@ -3,8 +3,9 @@ Tracks current stocks using alpha_ventage api.Role of First url used as api in p
 details.Asyncronous programming is used to make rapid requests to api without waitinng for responses.Celery is used in this project in order to acquire
 real time data.Whenever user submits the stocks our celery beat will get all those stock tickers and will keep on making api calls to get details about
 stocks independently in every 20 seconds so that we can get real time deatails in every 20 seconds.Goal was to get data every 20 seconds but alpha_ventage
-limitted the api calls up to 5 per/mins so we can only make 5 calls in every 60 seconds which is why I reccomend to select only 5 stocks for now but you can
-buy premium pakage of alpha_ventage to change that.Once all details is acquired we will use django channels and websockets to get those details in frontend.Project is still uncomplete
+limitted the api calls up to 5 per/mins so we can only make 5 calls in every 60 seconds which is why I reccomend to select only 5 stocks for now if you are using one user
+and if you are using multiple user then make sure that total stock selection of your users are less then 5 or 5. but you can change this limitation by 
+buying premium pakage of alpha_ventage or use yahoo finance,polygonoi,etc.Once all details is acquired we will use django channels and websockets to get those details in frontend.Project is still uncomplete
 
 # Workflow:
 At first I created a group named chat_tracks inside consumers.py vwhich contains channel_layers of all user/clients in our websocket.
