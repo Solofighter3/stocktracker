@@ -18,13 +18,14 @@ class StockConsumer(AsyncWebsocketConsumer):
             args = json.loads(task.args)
             print(args)
             args = args[0]
+            print(stockpicker)
             for x in stockpicker:
                 if x not in args:
                     args.append(x)
             task.args = json.dumps([args])
             task.save()
         else:
-            schedule, created = IntervalSchedule.objects.get_or_create(every=70, period = IntervalSchedule.SECONDS)
+            schedule,created= IntervalSchedule.objects.get_or_create(every=70, period = IntervalSchedule.SECONDS)
             task = PeriodicTask.objects.create(interval = schedule, name='every-70-seconds', task="mainapp.tasks.my_task", args = json.dumps([stockpicker]))
 
     @sync_to_async
@@ -65,11 +66,12 @@ class StockConsumer(AsyncWebsocketConsumer):
         print(args)
         for i in stocks:
             i.user.remove(user)#Removing user object related to stockdetail object
+            print(i.user.count())
             if i.user.count() == 0:
                 args.remove(i.stockselected)#If user is removed then stock  releted to that user
                                #will also be removed
                 i.delete()#In same way stock details related to that user will
-                          #also get deleted
+        print()                   #also get deleted
         if args == None:#IF there is no arguments in task then arguments field will be empty
             args = []
         #This condition deletes the task if task does not have any arguments
@@ -90,7 +92,7 @@ class StockConsumer(AsyncWebsocketConsumer):
 
         # Send message to room group
         await self.channel_layer.group_send(
-                self.room_group_name, {"type":"send_update",
+            self.room_group_name, {"type":"send_update",
                                    "message": message}
         )
 
@@ -100,6 +102,7 @@ class StockConsumer(AsyncWebsocketConsumer):
         #We need __set for reverse lookup to StockDetail class objects.
         #basically we are acessing  all those StockDetails objects associated with specified
         #user
+        print(user)
         user_stocks=user.stockdetail_set.values_list('stockselected',flat=True)
         return list(user_stocks)
     # Receive message from room group
@@ -120,6 +123,7 @@ class StockConsumer(AsyncWebsocketConsumer):
         #Now we need to send those user specific details in frontend
         user_stocks=await self.selectstockdetail()
         keys=message.keys()
+        print(keys)
         for i in list(keys):
             if i in user_stocks:
                 pass
@@ -128,4 +132,4 @@ class StockConsumer(AsyncWebsocketConsumer):
 
         #Once we recieve message from tasks we will send that message which contains data to
         #frontend through WebSocket
-        await self.send(text_data=json.dumps( message))
+        await self.send(text_data=json.dumps(message))

@@ -11,11 +11,19 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#">HOME<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="contacts">Contactus</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="logout">logout</a>
+      </li>
+
+
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -45,7 +53,7 @@
   </a>
 </div>
 <div class="container my-3">
-<h1>Following stocks are avilable</h1>
+  <h1>Following stocks are avilable{{name}}</h1>
 <form action="stocks">
 <label for="Stock_prices">Select stock:</label>
 <select class="custom-select custom-select-lg mb-3" multiple name="stockspicker">

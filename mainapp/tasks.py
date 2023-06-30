@@ -9,6 +9,7 @@ def my_task(self,coro_dict):
     datas={}
     for i in coro_dict:
            result=asyncio.run(update_stock(i))
+           print(result)
            datas.update({i:result['Global Quote']})
     print(datas)
     #Sending data to frontend
