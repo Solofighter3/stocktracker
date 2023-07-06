@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_celery_results',#Needed to see status of periodic tasks.
     'django_celery_beat',#Needed to perform periodic tasks
     'channels',#Needed to send real time data to frontend
+    'room'#Needed to make  investmennt specifications
 ]
 
 MIDDLEWARE = [

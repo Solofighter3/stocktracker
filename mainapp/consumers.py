@@ -133,3 +133,5 @@ class StockConsumer(AsyncWebsocketConsumer):
         #Once we recieve message from tasks we will send that message which contains data to
         #frontend through WebSocket
         await self.send(text_data=json.dumps(message))
+
+
