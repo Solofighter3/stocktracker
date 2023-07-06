@@ -17,3 +17,7 @@ channel_layer from that group I can send those data to user which made the reque
 asks for details about same stocks then I can make only one api call for those users and  boardcast those details to users through group.Once I send that details to specified
 channel_layer in my backend I will use websocket to send that details to frontend to that specified user/client/channel_layer.I have created stockdetails table in database where I can store the stocks selected by specified user and In consumer.py I have made specifications to  delete the task if there is no argument,delete the stocksdetails object which are not selected by specific user,delete the user if it is disconnected from the websocket so that stockdetails table will not contain data of those users that are disconnected from websocket.In this way I can prevent data clash between  users who are connected and users who are disconnected
 
+# ScreenShots
+indexpage
+![ss](https://github.com/Solofighter3/stocktracker/assets/135401600/7c3dceaf-adf2-47f3-9686-d8f6c9af5d18)
+one you select your prefered stock move to next page
