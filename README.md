@@ -5,8 +5,7 @@ real time data.Whenever user submits the stocks our celery beat will get all tho
 stocks independently in every 20 seconds so that we can get real time deatails in every 20 seconds.Goal was to get data every 20 seconds but alpha_ventage
 limitted the api calls up to 5 per/mins so we can only make 5 calls in every 60 seconds which is why I reccomend to select only 5 stocks for now if you are using one user
 and if you are using multiple user then make sure that total stock selection of your users are less then 5 or 5. but you can change this limitation by 
-buying premium pakage of alpha_ventage or use yahoo finance,polygonoi,etc.Once all details is acquired we will use django channels and websockets to get those details in frontend.Project is still uncomplete
-
+buying premium pakage of alpha_ventage or use yahoo finance,polygonoi,etc.Once all details is acquired we will use django channels and websockets to get those details in frontend.
 # Workflow:
 At first I created a group named chat_tracks inside consumers.py vwhich contains channel_layers of all user/clients in our websocket.
 Whenever user comes websocket page with some selected stocks from previous page,I will add that user's channel_layer inside my chat_tracks group
